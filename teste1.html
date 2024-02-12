@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jogo de Cores Submarino</title>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        background-image: url('https://s2.best-wallpaper.net/wallpaper/1920x1080/1609/Bottom-sea-animals-fish-starfish-coral-water-art-drawing_1920x1080.jpg'); /* imagem de fundo do mar */
+        background-size: cover;
+        background-repeat: no-repeat;
+        font-family: Arial, sans-serif;
+        transition: background-color 0.5s; /* transição suave para a mudança de cor de fundo */
+    }
+    #game-container {
+        position: relative; /* Para alinhar o texto no centro */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+    #generate-color-button {
+        padding: 15px 30px;
+        font-size: 20px;
+        background-color: #2ecc71; /* cor de fundo verde padrão do botão */
+        color: white;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: background-color 0.3s; /* transição suave para a mudança de cor do botão */
+    }
+    #generate-color-button:hover {
+        background-color: #27ae60; /* cor de fundo verde mais escura no hover */
+    }
+    #eliminated-message {
+        font-size: 48px;
+        color: orange;
+        font-weight: bold; /* texto em negrito */
+        text-align: center; /* centraliza o texto */
+        transform: rotate(-5deg); /* curvatura no texto */
+        font-family: 'Comic Sans MS', cursive, sans-serif; /* estilo cartoon */
+        display: none; /* Inicialmente oculto */
+    }
+</style>
+</head>
+<body>
+<div id="game-container">
+    <button id="generate-color-button">GERAR COR</button>
+    <div id="eliminated-message">FOSTE ELIMINADO</div>
+</div>
+
+<script>
+    const generateColorButton = document.getElementById('generate-color-button');
+    const eliminatedMessage = document.getElementById('eliminated-message');
+    let previousColorIndex = -1;
+
+    generateColorButton.addEventListener('click', () => {
+        let random;
+        do {
+            // Números aleatórios entre 0 e 5 para escolher a cor
+            random = Math.floor(Math.random() * 6);
+        } while (random === previousColorIndex); // Repete até que a cor seja diferente da anterior
+
+        // Armazena o índice da cor atual como o índice da cor anterior
+        previousColorIndex = random;
+
+        // Array de cores disponíveis
+        const colors = ['#ff0', '#0f0', '#f00', 'linear-gradient(to right, #0f0, #f00)', 'linear-gradient(to right, #0f0, #ff0)', 'linear-gradient(to right, #f00, #ff0)'];
+
+        // Aplica a cor ao fundo do body
+        document.body.style.background = colors[random];
+
+        // Verifica se a cor atual é amarela
+        if (colors[random] === '#ff0') {
+            // Exibe a mensagem de eliminação e oculta o botão "GERAR COR"
+            eliminatedMessage.style.display = 'block';
+            generateColorButton.style.display = 'none';
+        } else {
+            // Caso contrário, mantém a mensagem de eliminação oculta e exibe o botão "GERAR COR"
+            eliminatedMessage.style.display = 'none';
+            generateColorButton.style.display = 'block';
+        }
+    });
+</script>
+</body>
+</html>
